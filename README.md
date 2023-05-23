@@ -62,3 +62,6 @@ What will your team do if one person is pulling all the weight while the other p
 What will your team do if one person is taking over the project and not letting the other member contribute? Communicate like professionals, and talk about task distribution
 
 How will you approach each other and the challenge of building an application knowing that it is impossible for two people to be at the exact same place in understanding and skill level? Communicate comfort levels about the project at hand. 
+
+
+
