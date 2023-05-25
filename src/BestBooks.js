@@ -27,38 +27,48 @@ class BestBooks extends React.Component {
 
   }
 
-
-  render() {
-
-
-    return (
-      <>
-        <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
-        <Carousel>
-          {this.state.books.length > 0 ? this.state.books.map((books) => {
-            return <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src={img}
-                alt={books.description}
-                height='700'
-              />
-              <Carousel.Caption>
-                <h3>{books.title}</h3>
-                <p>{books.description}</p>
-                <p>{books.status}</p>
-
-              </Carousel.Caption>
-            </Carousel.Item>;
-          })
-            : (
-              <h3>No Books Found </h3>
-            )
-          }
-        </Carousel>
-      </>
-    );
+  postBooks = async (newBook) => {
+    try {
+      const url = `${process.env.REACT_APP_SERVER}/books`
+      const response = await axios.post(url, newBook);
+      this.setState({ books: [...this.state.books, response.data] }, () => console.log(this.state.books));
+    } catch (err) {
+      console.error(err);
+    }
   }
+
 }
 
+
+
+
+render(); {
+  return (
+    <>
+      <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
+      <Carousel>
+        {this.state.books.length > 0 ? this.state.books.map((books) => {
+          return <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={img}
+              alt={books.description}
+              height='700'
+            />
+            <Carousel.Caption>
+              <h3>{books.title}</h3>
+              <p>{books.description}</p>
+              <p>{books.status}</p>
+
+            </Carousel.Caption>
+          </Carousel.Item>;
+        })
+          : (
+            <h3>No Books Found </h3>
+          )
+        }
+      </Carousel>
+    </>
+  );
+};
 export default BestBooks;
