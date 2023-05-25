@@ -13,14 +13,13 @@ class AddForm extends React.Component {
     }
     this.props.postBooks(newBook)
   }
-}
-
-
-
-render();{
-  return (
-
-    <Container>
+  
+  
+  
+  render() {
+    return (
+      
+      <Container>
       <Form onSubmit={this.handleSubmit}>
         <Form.Group controlId="name">
           <Form.Label>Book Name</Form.Label>
@@ -38,4 +37,7 @@ render();{
       </Form>
     </Container>
   )
+}
 };
+
+export default AddForm;

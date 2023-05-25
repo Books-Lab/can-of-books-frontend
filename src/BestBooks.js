@@ -5,6 +5,7 @@ import img from './img/carasol.jpeg';
 import './main.css';
 
 
+
 class BestBooks extends React.Component {
   constructor(props) {
     super(props);
@@ -37,15 +38,15 @@ class BestBooks extends React.Component {
     }
   }
 
-}
-
-
-
-
-render(); {
-  return (
-    <>
+  
+  
+  
+  
+  render() {
+    return (
+      <>
       <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
+      
       <Carousel>
         {this.state.books.length > 0 ? this.state.books.map((books) => {
           return <Carousel.Item>
@@ -54,7 +55,7 @@ render(); {
               src={img}
               alt={books.description}
               height='700'
-            />
+              />
             <Carousel.Caption>
               <h3>{books.title}</h3>
               <p>{books.description}</p>
@@ -63,12 +64,13 @@ render(); {
             </Carousel.Caption>
           </Carousel.Item>;
         })
-          : (
-            <h3>No Books Found </h3>
+        : (
+          <h3>No Books Found </h3>
           )
         }
       </Carousel>
     </>
   );
+}
 };
 export default BestBooks;
