@@ -56,8 +56,16 @@ addBook = (e) => {
   e.preventDefault();
 }
 
-
-
+deleteBook = async(bookToDelete) => {
+  console.log(bookToDelete);
+  const url = `${process.env.REACT_APP_SERVER}/books/${bookToDelete._id}`
+  await axios.delete(url);
+  const updatedBooks = this.state.books.filter(book => book._id !== bookToDelete._id);
+  this.setState({books: updatedBooks});
+}
+deleteHandler = (e) => {
+  e.preventDefault();
+}
 
   render() {
     return (
@@ -66,18 +74,19 @@ addBook = (e) => {
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
         <Carousel>
 
-          {this.state.books.length > 0 ? this.state.books.map((books) => {
+          {this.state.books.length > 0 ? this.state.books.map((book) => {
             return <Carousel.Item>
               <img
                 className="d-block w-100"
                 src={img}
-                alt={books.description}
+                alt={book.description}
                 height='700'
               />
               <Carousel.Caption>
-                <h3>{books.title}</h3>
-                <p>{books.description}</p>
-                <p>{books.status}</p>
+                <h3>{book.title}</h3>
+                <p>{book.description}</p>
+                <p>{book.status}</p>
+                <button onClick={() => this.deleteBook(book)}>Delete book</button>
 
               </Carousel.Caption>
             </Carousel.Item>;
@@ -88,11 +97,13 @@ addBook = (e) => {
           }
         </Carousel>
         <Button onClick = {() => this.showBookModal()}>Add Book Here </Button>
+        {/* <Button onClick = {() => this.deleteBook()}>  Delete   </Button> */}
+
         <AddForm 
         show={this.state.showModal}
         hideBookModal={this.hideBookModal}
         postBooks={this.postBooks} 
-        
+    
         />
         
       </>
