@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Modal } from "react-bootstrap";
-import BestBooks from "./BestBooks";
+// import BestBooks from "./BestBooks";
 
 
 
@@ -12,7 +12,7 @@ class AddForm extends React.Component {
     const newBook = {
       title: e.target.title.value,
       description: e.target.description.value,
-      status: e.target.status.checked
+      status: e.target.status.value
     }
     this.props.postBooks(newBook)
     this.props.hideBookModal();
