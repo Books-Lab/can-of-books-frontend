@@ -1,8 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { Carousel } from 'react-bootstrap';
+import { Carousel, Button } from 'react-bootstrap';
 import img from './img/carasol.jpeg';
 import './main.css';
+import AddForm from './AddForm';
+
+
+
 
 
 
@@ -10,7 +14,8 @@ class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
+      books: [],
+      showModal: false,
     };
   }
 
@@ -23,7 +28,7 @@ class BestBooks extends React.Component {
       const response = await axios.get(`${process.env.REACT_APP_SERVER}/getBooks`);
       this.setState({ books: response.data });
     } catch (err) {
-      console.error(err);
+      console.error('Could not find book', err);
     }
 
   }
@@ -38,39 +43,60 @@ class BestBooks extends React.Component {
     }
   }
 
-  
-  
-  
-  
+  showBookModal = () => {
+    console.log("inside show book modal function");
+    this.setState({ showModal: true })
+  }
+
+  hideBookModal = () => {
+    this.setState({ showModal: false })
+  }
+
+addBook = (e) => {
+  e.preventDefault();
+}
+
+
+
+
   render() {
     return (
       <>
-      <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
-      
-      <Carousel>
-        {this.state.books.length > 0 ? this.state.books.map((books) => {
-          return <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={img}
-              alt={books.description}
-              height='700'
-              />
-            <Carousel.Caption>
-              <h3>{books.title}</h3>
-              <p>{books.description}</p>
-              <p>{books.status}</p>
 
-            </Carousel.Caption>
-          </Carousel.Item>;
-        })
-        : (
-          <h3>No Books Found </h3>
-          )
-        }
-      </Carousel>
-    </>
-  );
+        <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
+        <Carousel>
+
+          {this.state.books.length > 0 ? this.state.books.map((books) => {
+            return <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={img}
+                alt={books.description}
+                height='700'
+              />
+              <Carousel.Caption>
+                <h3>{books.title}</h3>
+                <p>{books.description}</p>
+                <p>{books.status}</p>
+
+              </Carousel.Caption>
+            </Carousel.Item>;
+          })
+            : (
+              <h3>No Books Found </h3>
+            )
+          }
+        </Carousel>
+        <Button onClick = {() => this.showBookModal()}>Add Book Here </Button>
+        <AddForm 
+        show={this.state.showModal}
+        hideBookModal={this.hideBookModal}
+        postBooks={this.postBooks} 
+        
+        />
+        
+      </>
+    )
+  }
 }
-};
 export default BestBooks;

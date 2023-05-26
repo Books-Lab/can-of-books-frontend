@@ -1,8 +1,11 @@
 import React from "react";
-import { Form, Container, Button } from "react-bootstrap";
+import { Form, Button, Modal } from "react-bootstrap";
+import BestBooks from "./BestBooks";
+
 
 
 class AddForm extends React.Component {
+
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -12,32 +15,35 @@ class AddForm extends React.Component {
       status: e.target.status.checked
     }
     this.props.postBooks(newBook)
+    this.props.hideBookModal();
   }
-  
-  
-  
+
+
+
+
   render() {
     return (
-      
-      <Container>
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Group controlId="name">
-          <Form.Label>Book Name</Form.Label>
-          <Form.Control type="text" placeholder="Enter Book Here" />
-        </Form.Group>
-        <Form.Group controlId="descrption">
-          <Form.Label>Book Plot</Form.Label>
-          <Form.Control type="text" placeholder="Enter Plot Here" />
-          <Form.Group controlId="status">
+
+      <Modal show={this.props.show} onHide={this.props.hideBookModal}>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group controlId="name">
             <Form.Label>Book Name</Form.Label>
-            <Form.Control type="text" placeholder="Have you read this book before?" />
+            <Form.Control type="text" placeholder="Enter Book Here" />
           </Form.Group>
-        </Form.Group>
-        <Button type="submit">Add Book</Button>
-      </Form>
-    </Container>
-  )
-}
+          <Form.Group controlId="description">
+            <Form.Label>Book Plot</Form.Label>
+            <Form.Control type="text" placeholder="Enter Plot Here" />
+            <Form.Group controlId="status">
+              <Form.Label>Read or Unread?</Form.Label>
+              <Form.Control type="text" placeholder="Have you read this book before?" />
+            </Form.Group>
+          </Form.Group>
+          <Button type="submit">Add Book</Button>
+          <Button variant="secondary">Close</Button>
+        </Form>
+      </Modal>
+    )
+  }
 };
 
 export default AddForm;
