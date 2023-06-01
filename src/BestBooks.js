@@ -4,6 +4,7 @@ import { Carousel, Button } from 'react-bootstrap';
 import img from './img/carasol.jpeg';
 import './main.css';
 import AddForm from './AddForm';
+import UpdateBook from './UpdateBook';
 
 
 
@@ -15,7 +16,9 @@ class BestBooks extends React.Component {
     super(props);
     this.state = {
       books: [],
-      showModal: false,
+      showAddModal: false,
+      showUpdateModal: false,
+      selectedBook: {}
     };
   }
 
@@ -45,27 +48,42 @@ class BestBooks extends React.Component {
 
   showBookModal = () => {
     console.log("inside show book modal function");
-    this.setState({ showModal: true })
+    this.setState({ showAddModal: true })
   }
 
   hideBookModal = () => {
-    this.setState({ showModal: false })
+    this.setState({ showAddModal: false })
   }
 
-addBook = (e) => {
-  e.preventDefault();
-}
+  addBook = (e) => {
+    e.preventDefault();
+  }
 
-deleteBook = async(bookToDelete) => {
-  console.log(bookToDelete);
-  const url = `${process.env.REACT_APP_SERVER}/books/${bookToDelete._id}`
-  await axios.delete(url);
-  const updatedBooks = this.state.books.filter(book => book._id !== bookToDelete._id);
-  this.setState({books: updatedBooks});
-}
-deleteHandler = (e) => {
-  e.preventDefault();
-}
+  deleteBook = async (bookToDelete) => {
+    console.log(bookToDelete);
+    const url = `${process.env.REACT_APP_SERVER}/books/${bookToDelete._id}`
+    await axios.delete(url);
+    const updatedBooks = this.state.books.filter(book => book._id !== bookToDelete._id);
+    this.setState({ books: updatedBooks });
+  }
+  deleteHandler = (e) => {
+    e.preventDefault();
+  }
+
+  updateBook = async (bookToUpdate) => {
+    console.log(bookToUpdate);  
+    const url = `${process.env.REACT_APP_SERVER}/books/${bookToUpdate._id}`
+    await axios.put(url, bookToUpdate);
+    const updateBooksArray = this.state.books.map(oldBook => oldBook._id === bookToUpdate._id ? bookToUpdate : oldBook);
+    this.setState({ books: updateBooksArray });
+  }
+
+  updateHandler = (e) => {
+    e.preventDefault();
+  }
+
+  openUpdateModal = (book) => this.setState({ showUpdateModal: true, selectedBook: book })
+  closeUpdateModal = () => this.setState({ showUpdateModal: false })
 
   render() {
     return (
@@ -87,6 +105,7 @@ deleteHandler = (e) => {
                 <p>{book.description}</p>
                 <p>{book.status}</p>
                 <button onClick={() => this.deleteBook(book)}>Delete book</button>
+                <button onClick={() => this.openUpdateModal(book)}>Update book</button>
 
               </Carousel.Caption>
             </Carousel.Item>;
@@ -96,16 +115,22 @@ deleteHandler = (e) => {
             )
           }
         </Carousel>
-        <Button onClick = {() => this.showBookModal()}>Add Book Here </Button>
+        <Button onClick={() => this.showBookModal()}>Add Book Here </Button>
         {/* <Button onClick = {() => this.deleteBook()}>  Delete   </Button> */}
 
-        <AddForm 
-        show={this.state.showModal}
-        hideBookModal={this.hideBookModal}
-        postBooks={this.postBooks} 
-    
+        <AddForm
+          show={this.state.showAddModal}
+          hideBookModal={this.hideBookModal}
+          postBooks={this.postBooks}
         />
-        
+        <UpdateBook
+          showUpdateModal={this.state.showUpdateModal}
+          closeUpdateModal={this.closeUpdateModal}
+          updateBook={this.updateBook}
+          selectedBook={this.state.selectedBook}
+        />
+
+
       </>
     )
   }

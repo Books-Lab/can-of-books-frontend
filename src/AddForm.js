@@ -39,7 +39,7 @@ class AddForm extends React.Component {
             </Form.Group>
           </Form.Group>
           <Button type="submit">Add Book</Button>
-          <Button variant="secondary">Close</Button>
+          <Button variant="secondary">Update</Button>
         </Form>
       </Modal>
     )
