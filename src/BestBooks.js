@@ -7,10 +7,6 @@ import AddForm from './AddForm';
 import UpdateBook from './UpdateBook';
 
 
-
-
-
-
 class BestBooks extends React.Component {
   constructor(props) {
     super(props);

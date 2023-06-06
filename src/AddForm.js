@@ -26,7 +26,7 @@ class AddForm extends React.Component {
 
       <Modal show={this.props.show} onHide={this.props.hideBookModal}>
         <Form onSubmit={this.handleSubmit}>
-          <Form.Group controlId="name">
+          <Form.Group controlId="title">
             <Form.Label>Book Name</Form.Label>
             <Form.Control type="text" placeholder="Enter Book Here" />
           </Form.Group>
