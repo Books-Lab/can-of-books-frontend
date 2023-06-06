@@ -6,10 +6,6 @@ import './main.css';
 import AddForm from './AddForm';
 
 
-
-
-
-
 class BestBooks extends React.Component {
   constructor(props) {
     super(props);
