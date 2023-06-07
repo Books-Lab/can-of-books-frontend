@@ -5,6 +5,7 @@ import img from './img/carasol.jpeg';
 import './main.css';
 import AddForm from './AddForm';
 import UpdateBook from './UpdateBook';
+import { withAuth0 } from '@auth0/auth0-react';
 
 
 class BestBooks extends React.Component {
@@ -24,7 +25,10 @@ class BestBooks extends React.Component {
 
   async fetchBooks() {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_SERVER}/getBooks`);
+      const res = await this.props.auth0.getIdTokenClaims();
+      const jwt = res.__raw
+      const config = { headers:{'Authorization':`Bearer ${jwt}`}}
+      const response = await axios.get(`${process.env.REACT_APP_SERVER}/getBooks`, config);
       this.setState({ books: response.data });
     } catch (err) {
       console.error('Could not find book', err);
@@ -131,4 +135,4 @@ class BestBooks extends React.Component {
     )
   }
 }
-export default BestBooks;
+export default withAuth0(BestBooks);
