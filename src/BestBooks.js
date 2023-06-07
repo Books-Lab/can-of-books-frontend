@@ -38,8 +38,12 @@ class BestBooks extends React.Component {
 
   postBooks = async (newBook) => {
     try {
+      const res = await this.props.auth0.getIdTokenClaims();
+      const jwt = res.__raw 
+      const config = { headers:{'Authorization':`Bearer ${jwt}`}}
+
       const url = `${process.env.REACT_APP_SERVER}/books`
-      const response = await axios.post(url, newBook);
+      const response = await axios.post(url, newBook, config);
       this.setState({ books: [...this.state.books, response.data] }, () => console.log(this.state.books));
     } catch (err) {
       console.error(err);
